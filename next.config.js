@@ -11,7 +11,15 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: 'recoveredtreasurestx.shop',
+      },
+      {
+        protocol: 'https',
+        hostname: '940smiley.github.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
       },
     ],
   },
