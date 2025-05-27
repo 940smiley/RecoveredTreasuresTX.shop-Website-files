@@ -14,12 +14,22 @@ export async function POST(request: NextRequest) {
     // Simulate AI analysis for static deployment
     await new Promise(resolve => setTimeout(resolve, 1000))
 
-    const categories = ['Comic Books', 'Trading Cards', 'Sports Cards', 'Star Wars', 'Vintage Books']
-    const subcategories = ['Marvel', 'Pokemon', 'Baseball', 'Original Trilogy', 'Science Fiction']
+    const categoryMap = {
+      'Comic Books': ['Marvel', 'DC Comics', 'Independent', 'Golden Age', 'Silver Age'],
+      'Trading Cards': ['Pokemon', 'Yu-Gi-Oh', 'Buddyfight', 'Magic: The Gathering'],
+      'Sports Cards': ['Baseball', 'Football', 'Basketball', 'Hockey', 'Soccer'],
+      'Star Wars': ['Original Trilogy', 'Prequel Trilogy', 'Sequel Trilogy', 'Expanded Universe'],
+      'Vintage Books': ['Science Fiction', 'Adventure', 'Pulp Fiction', 'First Editions']
+    } as const
+    
+    const categories = Object.keys(categoryMap) as Array<keyof typeof categoryMap>
+    const selectedCategory = categories[Math.floor(Math.random() * categories.length)]
+    const subcategories = categoryMap[selectedCategory]
+    const selectedSubcategory = subcategories[Math.floor(Math.random() * subcategories.length)]
     
     const analysis = {
-      category: categories[Math.floor(Math.random() * categories.length)],
-      subcategory: subcategories[Math.floor(Math.random() * subcategories.length)],
+      category: selectedCategory,
+      subcategory: selectedSubcategory,
       confidence: 0.88 + Math.random() * 0.11,
       description: `This appears to be a collectible item in good condition with clear details visible.`,
       detectedText: ['Copyright', 'Vintage', 'Collectible'],
