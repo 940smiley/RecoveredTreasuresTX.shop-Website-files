@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -30,24 +30,24 @@ model Product {
   title             String
   description       String?
   aiGeneratedDesc   String?
-  condition         ProductCondition @default(UNKNOWN)
-  price             Decimal?
-  originalPrice     Decimal?
+  condition         String   @default("UNKNOWN")
+  price             Float?
+  originalPrice     Float?
   year              Int?
   manufacturer      String?
   series            String?
   edition           String?
   rarity            String?
   isAuthenticated   Boolean  @default(false)
-  weight            Decimal?
+  weight            Float?
   dimensions        String?
   sku               String?  @unique
   barcode           String?
-  tags              String[]
+  tags              String   @default("")
   categoryId        String
   category          Category @relation(fields: [categoryId], references: [id])
   images            ProductImage[]
-  status            ProductStatus @default(DRAFT)
+  status            String   @default("DRAFT")
   featured          Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -77,7 +77,7 @@ model ProductImage {
 model UploadBatch {
   id        String      @id @default(cuid())
   name      String?
-  status    BatchStatus @default(PROCESSING)
+  status    String      @default("PROCESSING")
   totalFiles Int        @default(0)
   processedFiles Int    @default(0)
   successFiles Int      @default(0)
@@ -94,11 +94,11 @@ model UploadBatchItem {
   filename        String
   originalPath    String
   url             String?
-  status          ItemStatus @default(PENDING)
+  status          String   @default("PENDING")
   errorMessage    String?
   detectedCategory String?
-  detectedTags    String[]
-  aiAnalysis      Json?
+  detectedTags    String   @default("")
+  aiAnalysis      String?
   productId       String?
   batchId         String
   batch           UploadBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
@@ -106,38 +106,4 @@ model UploadBatchItem {
   updatedAt       DateTime @updatedAt
 
   @@map("upload_batch_items")
-}
-
-enum ProductCondition {
-  MINT
-  NEAR_MINT
-  EXCELLENT
-  VERY_GOOD
-  GOOD
-  FAIR
-  POOR
-  DAMAGED
-  UNKNOWN
-}
-
-enum ProductStatus {
-  DRAFT
-  ACTIVE
-  SOLD
-  ARCHIVED
-}
-
-enum BatchStatus {
-  PENDING
-  PROCESSING
-  COMPLETED
-  FAILED
-}
-
-enum ItemStatus {
-  PENDING
-  PROCESSING
-  COMPLETED
-  FAILED
-  CATEGORIZED
 }
