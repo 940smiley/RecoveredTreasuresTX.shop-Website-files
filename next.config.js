@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  skipTrailingSlashRedirect: true,
+  basePath: '',
+  assetPrefix: '',
   images: {
+    unoptimized: true,
     domains: ['localhost', 'res.cloudinary.com'],
     remotePatterns: [
       {
@@ -8,6 +14,9 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+  },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: '',
   },
 }
 
