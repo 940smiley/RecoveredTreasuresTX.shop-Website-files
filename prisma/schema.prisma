@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  parentId    String?
+  parent      Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("categories")
+}
+
+model Product {
+  id                String   @id @default(cuid())
+  title             String
+  description       String?
+  aiGeneratedDesc   String?
+  condition         ProductCondition @default(UNKNOWN)
+  price             Decimal?
+  originalPrice     Decimal?
+  year              Int?
+  manufacturer      String?
+  series            String?
+  edition           String?
+  rarity            String?
+  isAuthenticated   Boolean  @default(false)
+  weight            Decimal?
+  dimensions        String?
+  sku               String?  @unique
+  barcode           String?
+  tags              String[]
+  categoryId        String
+  category          Category @relation(fields: [categoryId], references: [id])
+  images            ProductImage[]
+  status            ProductStatus @default(DRAFT)
+  featured          Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("products")
+}
+
+model ProductImage {
+  id          String   @id @default(cuid())
+  url         String
+  originalUrl String?
+  filename    String
+  size        Int?
+  width       Int?
+  height      Int?
+  isPrimary   Boolean  @default(false)
+  isProcessed Boolean  @default(false)
+  altText     String?
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("product_images")
+}
+
+model UploadBatch {
+  id        String      @id @default(cuid())
+  name      String?
+  status    BatchStatus @default(PROCESSING)
+  totalFiles Int        @default(0)
+  processedFiles Int    @default(0)
+  successFiles Int      @default(0)
+  failedFiles Int       @default(0)
+  items     UploadBatchItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@map("upload_batches")
+}
+
+model UploadBatchItem {
+  id              String   @id @default(cuid())
+  filename        String
+  originalPath    String
+  url             String?
+  status          ItemStatus @default(PENDING)
+  errorMessage    String?
+  detectedCategory String?
+  detectedTags    String[]
+  aiAnalysis      Json?
+  productId       String?
+  batchId         String
+  batch           UploadBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("upload_batch_items")
+}
+
+enum ProductCondition {
+  MINT
+  NEAR_MINT
+  EXCELLENT
+  VERY_GOOD
+  GOOD
+  FAIR
+  POOR
+  DAMAGED
+  UNKNOWN
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  SOLD
+  ARCHIVED
+}
+
+enum BatchStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum ItemStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CATEGORIZED
+}
