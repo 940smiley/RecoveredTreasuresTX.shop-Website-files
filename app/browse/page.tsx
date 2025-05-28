@@ -1,3 +1,7 @@
+"use client"
+
+"use client"
+
 import { CategoryGrid } from '@/components/store/category-grid'
 import { ProductGrid } from '@/components/store/product-grid'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
