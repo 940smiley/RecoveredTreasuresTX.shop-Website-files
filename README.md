@@ -21,28 +21,14 @@ An AI-powered collectibles management platform designed to streamline the organi
 - **Photography Equipment**
 - **Stamps & Ephemera**
 
-### Supported Categories
-- **Vintage Books** - Edgar Rice Burroughs, early Tarzan editions (1910s-1920s)
-- **Comic Books** - Rare and vintage comic collections
-- **Fast Food Toys** - McDonald's, Burger King promotional items
-- **Star Wars Memorabilia** - Theater promos, popcorn buckets, magazines, bobbleheads
-- **Trading Cards** - Pokemon, Buddyfight, and other TCGs
-- **Collectible Cards** - DBZ, Magic: The Gathering, premium cards
-- **Sports Cards** - Baseball, football, basketball (some autographed)
-- **Photography Equipment** - Vintage cameras and accessories
-- **Stamps** - Worldwide stamp collections
-- **Ephemera** - Newspapers, magazines, Hit Parader from the 80s
-- **Coca Cola Collectibles** - Village sets, mini fridges, radios, bottles
-- **Atari Games** - Classic gaming systems and cartridges
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ and npm
-- PostgreSQL database
-- OpenAI API key (for AI descriptions)
-- Google Vision API key (for OCR and object detection)
-- Cloudinary account (for image processing)
+- Node.js 18+
+- npm/pnpm
+- SQLite (development) or PostgreSQL (production)
+
+### Setup
 
 ### Installation
 
