@@ -1,8 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Suspense } from 'react'
 import { Navbar } from '@/components/layout/navbar'
 import { Toaster } from '@/components/ui/toaster'
+import Loading from './loading'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +25,9 @@ export default function RootLayout({
         <div className="min-h-screen bg-background">
           <Navbar />
           <main className="container mx-auto px-4 py-8">
-            {children}
+            <Suspense fallback={<Loading />}>
+              {children}
+            </Suspense>
           </main>
           <Toaster />
         </div>

@@ -29,11 +29,15 @@ export default function ManagementPage() {
   const [password, setPassword] = useState('')
 
   const handleLogin = () => {
-    // Simple authentication - replace with proper auth
-    if (password === 'admin123') {
+    // Simple authentication - replace with proper auth in production
+    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123'
+    if (password === adminPassword) {
       setIsAuthenticated(true)
+      // Clear password from memory
+      setPassword('')
     } else {
-      alert('Invalid password. Try: admin123')
+      alert('Invalid password')
+      setPassword('')
     }
   }
 

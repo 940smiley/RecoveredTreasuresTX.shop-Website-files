@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { 
@@ -10,8 +12,8 @@ import {
   Camera, 
   Mail, 
   Newspaper, 
-  Bottle,
-  Joystick
+  Wine,
+  Gamepad
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -113,7 +115,7 @@ const categories = [
     id: 'coca-cola',
     name: 'Coca Cola Collectibles',
     description: 'Village sets, mini fridges, radios, bottles, memorabilia',
-    icon: Bottle,
+    icon: Wine,
     count: 78,
     color: 'text-red-700',
     bgColor: 'bg-red-100',
@@ -123,7 +125,7 @@ const categories = [
     id: 'atari',
     name: 'Atari Games',
     description: 'Atari system with 100+ games (untested)',
-    icon: Joystick,
+    icon: Gamepad,
     count: 101,
     color: 'text-cyan-600',
     bgColor: 'bg-cyan-50'

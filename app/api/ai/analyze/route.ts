@@ -11,8 +11,33 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // TODO: Integrate with OpenAI Vision API
-    const analysis = await analyzeWithAI(imageUrl || imageData)
+    // Simulate AI analysis for static deployment
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    const categoryMap = {
+      'Comic Books': ['Marvel', 'DC Comics', 'Independent', 'Golden Age', 'Silver Age'],
+      'Trading Cards': ['Pokemon', 'Yu-Gi-Oh', 'Buddyfight', 'Magic: The Gathering'],
+      'Sports Cards': ['Baseball', 'Football', 'Basketball', 'Hockey', 'Soccer'],
+      'Star Wars': ['Original Trilogy', 'Prequel Trilogy', 'Sequel Trilogy', 'Expanded Universe'],
+      'Vintage Books': ['Science Fiction', 'Adventure', 'Pulp Fiction', 'First Editions']
+    } as const
+    
+    const categories = Object.keys(categoryMap) as Array<keyof typeof categoryMap>
+    const selectedCategory = categories[Math.floor(Math.random() * categories.length)]
+    const subcategories = categoryMap[selectedCategory]
+    const selectedSubcategory = subcategories[Math.floor(Math.random() * subcategories.length)]
+    
+    const analysis = {
+      category: selectedCategory,
+      subcategory: selectedSubcategory,
+      confidence: 0.88 + Math.random() * 0.11,
+      description: `This appears to be a collectible item in good condition with clear details visible.`,
+      detectedText: ['Copyright', 'Vintage', 'Collectible'],
+      condition: 'Very Good',
+      rarity: Math.random() > 0.7 ? 'Rare' : 'Common',
+      estimatedYear: 1970 + Math.floor(Math.random() * 50),
+      features: ['Clear imagery', 'Readable text', 'Good lighting', 'Minimal wear visible']
+    }
 
     return NextResponse.json({
       success: true,
@@ -25,39 +50,5 @@ export async function POST(request: NextRequest) {
       { error: 'Failed to analyze image' }, 
       { status: 500 }
     )
-  }
-}
-
-async function analyzeWithAI(image: string) {
-  // Simulate AI analysis - replace with actual OpenAI Vision API call
-  await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000))
-
-  const categories = {
-    'Comic Books': ['Marvel', 'DC', 'Independent', 'Golden Age', 'Silver Age'],
-    'Trading Cards': ['Pokemon', 'Yu-Gi-Oh', 'Buddyfight', 'Sports'],
-    'Sports Cards': ['Baseball', 'Football', 'Basketball', 'Hockey'],
-    'Star Wars': ['Original Trilogy', 'Prequel', 'Sequel', 'Expanded Universe'],
-    'Vintage Books': ['Tarzan', 'Science Fiction', 'Adventure', 'Pulp Fiction'],
-  }
-
-  const categoryName = Object.keys(categories)[Math.floor(Math.random() * Object.keys(categories).length)]
-  const subcategories = categories[categoryName as keyof typeof categories]
-  const subcategory = subcategories[Math.floor(Math.random() * subcategories.length)]
-
-  return {
-    category: categoryName,
-    subcategory,
-    confidence: 0.88 + Math.random() * 0.11,
-    description: `This appears to be a ${categoryName.toLowerCase()} item, specifically in the ${subcategory} category. The image shows good detail and the item appears to be in collectible condition.`,
-    detectedText: ['Copyright 1977', 'Star Wars', 'Lucas Films'],
-    condition: 'Very Good',
-    rarity: Math.random() > 0.7 ? 'Rare' : 'Common',
-    estimatedYear: 1970 + Math.floor(Math.random() * 50),
-    features: [
-      'Clear imagery',
-      'Readable text',
-      'Good lighting',
-      'Minimal wear visible'
-    ]
   }
 }
