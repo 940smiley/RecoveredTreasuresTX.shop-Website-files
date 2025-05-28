@@ -1,22 +1,25 @@
-# Recollected Treasures TX - AI-Powered Collectibles Store
+# 🏆 Recollected Treasures TX
 
-A modern, AI-enhanced e-commerce platform specifically designed for collectibles, featuring automatic categorization, photo enhancement, and intelligent product descriptions.
+An AI-powered collectibles management platform designed to streamline the organization, authentication, and presentation of vintage and rare collectibles.
 
-## 🌟 Features
+## ✨ Key Features
 
-### Core Store Functionality
-- **Modern E-commerce Interface** - Fast, responsive design built with Next.js 14 and Tailwind CSS
-- **Category Management** - Pre-configured for specific collectible types
-- **Product Listings** - Detailed product pages with condition tracking, pricing, and metadata
-- **Inventory Management** - Track quantities, conditions, and authenticity
+### 🤖 AI-Powered Tools
+- **Smart Categorization** - Automatic item identification and sorting
+- **Image Enhancement** - Professional photo cleanup and optimization
+- **Description Generation** - Detailed, accurate product descriptions
+- **Authentication Assist** - AI-powered authenticity verification
+- **Batch Processing** - Handle hundreds of items simultaneously
 
-### AI-Powered Features
-- **Smart Product Descriptions** - AI-generated detailed descriptions using computer vision
-- **Photo Enhancement** - Automatic cleanup, color correction, and optimization
-- **Batch Categorization** - Upload hundreds of photos and let AI sort them automatically
-- **OCR Text Recognition** - Extract text from images for better categorization
-- **Object Detection** - Identify specific collectible types and conditions
-- **Authentication Assistance** - AI-powered authenticity verification
+### 📦 Supported Collections
+- **Vintage Books** & Comics
+- **Trading Cards** (Pokemon, MTG, Sports)
+- **Star Wars Memorabilia**
+- **Fast Food Collectibles**
+- **Classic Gaming** (Atari, etc.)
+- **Coca-Cola Items**
+- **Photography Equipment**
+- **Stamps & Ephemera**
 
 ### Supported Categories
 - **Vintage Books** - Edgar Rice Burroughs, early Tarzan editions (1910s-1920s)
