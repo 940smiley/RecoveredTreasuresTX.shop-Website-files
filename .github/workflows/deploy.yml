@@ -39,8 +39,16 @@ jobs:
         run: npx prisma generate
         
       - name: Build with Next.js
-        run: npm run build
-        
+        run: |
+          npm run build
+          touch out/.nojekyll
+          echo "NEXT_PUBLIC_USE_STATIC_DATA=true" >> $GITHUB_ENV
+          echo "NODE_ENV=production" >> $GITHUB_ENV
+        env:
+          NEXT_PUBLIC_BASE_PATH: /RecollectedTreasuresTX
+          NEXT_PUBLIC_USE_STATIC_DATA: "true"
+          NODE_ENV: "production"
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

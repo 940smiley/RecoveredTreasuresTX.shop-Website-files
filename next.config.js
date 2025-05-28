@@ -3,11 +3,11 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  basePath: '',
-  assetPrefix: '',
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
   images: {
     unoptimized: true,
-    domains: ['localhost', 'res.cloudinary.com'],
+    domains: ['localhost', 'res.cloudinary.com', '940smiley.github.io', 'github.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -19,12 +19,16 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'github.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
     ],
   },
   env: {
-    NEXT_PUBLIC_BASE_PATH: '',
+    NEXT_PUBLIC_BASE_PATH: '/RecollectedTreasuresTX',
   },
 }
 
