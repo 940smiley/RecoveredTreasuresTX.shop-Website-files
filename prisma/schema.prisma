@@ -3,15 +3,11 @@
 
 generator client {
   provider = "prisma-client-js"
-  // Enable prefixed indexes for better performance
-  previewFeatures = ["postgresqlExtensions", "fullTextSearch"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-  // Useful for full-text search
-  extensions = [pgcrypto, pg_trgm]
 }
 
 // Enum definitions for better type safety
@@ -60,7 +56,7 @@ model ActivityLog {
   action      String   // CREATE, UPDATE, DELETE, VIEW, PROCESS, LOGIN, etc.
   entityType  String   // Product, Category, Batch, User, etc.
   entityId    String?  // ID of the entity being acted upon
-  details     Json?    // Additional details about the activity
+  details     String?  // Additional details about the activity (stored as JSON string)
   ipAddress   String?
   userAgent   String?
   
@@ -136,8 +132,8 @@ model Product {
   barcode           String?
   stockQuantity     Int      @default(1)
   
-  // Store tags as an array for better querying
-  tags              String[] @default([])
+  // Store tags as JSON string for SQLite compatibility
+  tags              String   @default("[]")
   
   // Relations
   categoryId        String
@@ -156,16 +152,16 @@ model Product {
   deletedAt         DateTime?
   
   // Source tracking
-  uploadBatchItemId String?
+  uploadBatchItemId String? @unique
   batchItem         UploadBatchItem? @relation(fields: [uploadBatchItemId], references: [id])
 
   // Indexes for common queries
   @@index([categoryId])
   @@index([status, featured])
   @@index([manufacturer])
-  @@index([tags])
   @@index([deletedAt])
-  @@fulltext([title, description]) // Full-text search for product search
+  @@index([title])
+  @@index([description])
   @@map("products")
 }
 
@@ -242,14 +238,15 @@ model UploadBatchItem {
   
   // AI processing data
   detectedCategory String?
-  detectedTags    String[] @default([])
-  aiAnalysis      Json?    // Store AI analysis as structured data
+  detectedTags    String   @default("[]") // Store as JSON string for SQLite
+  aiAnalysis      String?  // Store AI analysis as JSON string
   confidenceScore Float?   // AI confidence score
   
   // Relations
   batchId         String
   batch           UploadBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
   product         Product?    // Relation to the product created from this upload
+  stagingItems    StagingItem[]
   
   // Processing info
   processingStartedAt DateTime?
@@ -263,4 +260,22 @@ model UploadBatchItem {
   @@index([batchId, status])
   @@index([detectedCategory])
   @@map("upload_batch_items")
+}
+
+model StagingItem {
+  id                    String   @id @default(cuid())
+  uploadBatchItemId     String
+  uploadBatchItem       UploadBatchItem @relation(fields: [uploadBatchItemId], references: [id])
+  originalUrl           String
+  backgroundRemovedUrl  String?
+  enhancedPhotoUrl      String?
+  suggestedCategory     String?
+  aiGeneratedDescription String?
+  status               String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([status])
+  @@index([uploadBatchItemId])
+  @@map("staging_items")
 }
