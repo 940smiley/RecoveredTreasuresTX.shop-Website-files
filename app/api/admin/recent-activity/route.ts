@@ -3,6 +3,31 @@ import { prisma } from '@/lib/db';
 import { authMiddleware } from '@/lib/middleware';
 import { useStaticData } from '@/lib/config';
 
+// Define types based on Prisma schema
+interface UploadBatch {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+  status: string;
+  totalFiles: number;
+  processedFiles: number;
+  successFiles: number;
+  failedFiles: number;
+  userId?: string | null;
+  userEmail?: string | null;
+  startedAt?: Date | null;
+  completedAt?: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface Product {
+  id: string;
+  title: string;
+  updatedAt: Date;
+  [key: string]: any; // Allow additional properties
+}
+
 // Helper to format relative time
 function formatTimeAgo(date: Date): string {
   const now = new Date();
@@ -77,7 +102,7 @@ export async function GET(request: NextRequest) {
       }
     });
     
-    const batchActivities = recentBatches.map(batch => ({
+    const batchActivities = recentBatches.map((batch: UploadBatch) => ({
       id: batch.id,
       type: 'upload' as ActivityType,
       title: 'Batch upload completed',
@@ -100,7 +125,7 @@ export async function GET(request: NextRequest) {
       }
     });
     
-    const editActivities = recentEdits.map(product => ({
+    const editActivities = recentEdits.map((product: Product) => ({
       id: product.id,
       type: 'edit' as ActivityType,
       title: 'Product information updated',
@@ -121,7 +146,7 @@ export async function GET(request: NextRequest) {
       }
     });
     
-    const aiActivities = recentAIUpdates.map(product => ({
+    const aiActivities = recentAIUpdates.map((product: Product) => ({
       id: `ai-${product.id}`,
       type: 'ai' as ActivityType,
       title: 'AI description generated',
