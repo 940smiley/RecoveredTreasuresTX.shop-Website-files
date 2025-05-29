@@ -13,7 +13,6 @@ import {
   Sparkles
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { getFullPath } from '@/lib/env'
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
