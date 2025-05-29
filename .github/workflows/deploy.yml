@@ -47,9 +47,17 @@ jobs:
           echo "NEXT_PUBLIC_USE_STATIC_DATA=true" >> $GITHUB_ENV
           echo "NODE_ENV=production" >> $GITHUB_ENV
         env:
+          # Static data flags
           NEXT_PUBLIC_USE_STATIC_DATA: "true"
           NEXT_PUBLIC_SKIP_PRISMA: "true"
           NODE_ENV: "production"
+          
+          # Required environment variables (dummy values for static build)
+          DATABASE_URL: "file:./dev.db"
+          ADMIN_PASSWORD: "dummy-password-for-static-build"
+          JWT_SECRET: "dummy-jwt-secret-for-static-build"
+          NEXTAUTH_SECRET: "dummy-nextauth-secret-for-static-build"
+          NEXTAUTH_URL: "https://recoveredtreasurestx.shop"
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
