@@ -1,4 +1,4 @@
-# Security Guidelines for Recollected Treasures TX
+# Security Guidelines for Recovered Treasures TX
 
 ## 🔐 Current Security Implementation
 
