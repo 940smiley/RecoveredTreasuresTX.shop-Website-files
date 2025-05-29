@@ -12,7 +12,8 @@ import {
   ShoppingBag,
   Sparkles
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getFullPath } from '@/lib/env'
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -27,7 +28,7 @@ export function Navbar() {
               <ShoppingBag className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-xl hidden sm:inline-block">
-              Recollected Treasures TX
+              Recovered Treasures TX
             </span>
             <span className="font-bold text-xl sm:hidden">
               RT-TX

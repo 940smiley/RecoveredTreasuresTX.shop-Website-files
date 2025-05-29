@@ -1,10 +1,10 @@
 // Application constants
 
 export const SITE_CONFIG = {
-  name: 'Recollected Treasures TX',
+  name: 'Recovered Treasures TX',
   description: 'Premium collectibles with AI-powered organization, authentication, and discovery',
-  url: 'https://recoveredtreasurestx.shop',
-  github: 'https://github.com/940smiley/RecollectedTreasuresTX',
+  url: 'https://Recoveredtreasurestx.shop',
+  github: 'https://github.com/940smiley/RecoveredTreasuresTX',
 } as const
 
 export const COLLECTIBLE_CATEGORIES = [

@@ -7,15 +7,17 @@ import { Upload, Sparkles, Camera, BarChart3, Search, Star } from 'lucide-react'
 import Link from 'next/link'
 import { CategoryGrid } from '@/components/store/category-grid'
 import { FeatureShowcase } from '@/components/store/feature-showcase'
+import { basePath } from '@/lib/env'
+import { withHydration } from '@/lib/client-utils'
 
-export default function HomePage() {
+function HomePage() {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
       <section className="text-center py-12 gradient-bg rounded-2xl text-white">
         <div className="max-w-4xl mx-auto px-6">
           <h1 className="text-5xl font-bold mb-6">
-            Recollected Treasures TX
+            Recovered Treasures TX
           </h1>
           <p className="text-xl mb-8 opacity-90">
             Premium collectibles with AI-powered organization, authentication, and discovery
@@ -143,3 +145,5 @@ export default function HomePage() {
     </div>
   )
 }
+
+export default withHydration(HomePage)

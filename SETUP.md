@@ -48,13 +48,13 @@ Visit: http://localhost:3000
 # Mac/Linux: brew services start postgresql
 
 # Create database
-createdb recollected_treasures
+createdb Recovered_treasures
 ```
 
 ### 3. Update Environment
 Update your `.env.local`:
 ```env
-DATABASE_URL="postgresql://username:password@localhost:5432/recollected_treasures?schema=public"
+DATABASE_URL="postgresql://username:password@localhost:5432/Recovered_treasures?schema=public"
 ```
 
 ### 4. Setup Database
@@ -72,7 +72,7 @@ Add these to your `.env.local` for full functionality:
 ```env
 # Database (choose one)
 DATABASE_URL="file:./dev.db"  # SQLite (recommended for testing)
-# DATABASE_URL="postgresql://user:pass@localhost:5432/recollected_treasures"  # PostgreSQL
+# DATABASE_URL="postgresql://user:pass@localhost:5432/Recovered_treasures"  # PostgreSQL
 
 # AI Services (add when ready)
 # OPENAI_API_KEY="your_openai_api_key_here"

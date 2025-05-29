@@ -9,7 +9,7 @@ import Loading from './loading'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Recollected Treasures TX - Premium Collectibles Store',
+  title: 'Recovered Treasures TX - Premium Collectibles Store',
   description: 'Discover rare and valuable collectibles including vintage books, comics, toys, trading cards, memorabilia, and more. AI-powered organization and authentication.',
   keywords: ['collectibles', 'vintage', 'antiques', 'trading cards', 'comics', 'toys', 'memorabilia'],
 }

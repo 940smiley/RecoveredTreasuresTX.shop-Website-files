@@ -1,7 +1,7 @@
-# 🚀 Deployment Guide - Recollected Treasures TX
+# 🚀 Deployment Guide - Recovered Treasures TX
 
 ## ✅ Current Status: LIVE
-- **Site URL**: https://recoveredtreasurestx.shop
+- **Site URL**: https://Recoveredtreasurestx.shop
 - **GitHub Pages**: Configured and deployed
 - **Demo Mode**: Fully functional
 
@@ -18,7 +18,7 @@ The site automatically deploys when you push to the `main` branch via GitHub Act
    - Folder: "/ (root)"
 
 2. **Custom Domain Configuration**:
-   - Add domain: `recoveredtreasurestx.shop`
+   - Add domain: `Recoveredtreasurestx.shop`
    - Check "Enforce HTTPS"
 
 ## 🔧 Build Process
@@ -49,8 +49,8 @@ CNAME   www     940smiley.github.io   30 min
 
 ### Verification:
 - DNS propagation: 24-48 hours
-- Check status: `dig recoveredtreasurestx.shop`
-- Test HTTPS: https://recoveredtreasurestx.shop
+- Check status: `dig Recoveredtreasurestx.shop`
+- Test HTTPS: https://Recoveredtreasurestx.shop
 
 ## 📊 Site Features (Demo Mode)
 
