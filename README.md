@@ -1,4 +1,4 @@
-# 🏆 Recollected Treasures TX
+# 🏆 recovered Treasures TX
 
 An AI-powered collectibles management platform designed to streamline the organization, authentication, and presentation of vintage and rare collectibles.
 
@@ -32,8 +32,8 @@ An AI-powered collectibles management platform designed to streamline the organi
 
 1. **Clone & Install**
    ```bash
-   git clone https://github.com/940smiley/RecollectedTreasuresTX.git
-   cd RecollectedTreasuresTX
+   git clone https://github.com/940smiley/recoveredTreasuresTX.git
+   cd recoveredTreasuresTX
    npm install
    ```
 
