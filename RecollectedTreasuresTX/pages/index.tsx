@@ -1,6 +1,14 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { HomeOutlined, UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { 
+  HomeOutlined, 
+  UserOutlined, 
+  LaptopOutlined, 
+  NotificationOutlined, 
+  MailOutlined, 
+  AppstoreOutlined, 
+  SettingOutlined 
+} from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -63,20 +71,23 @@ const App: React.FC = () => (
           <Breadcrumb.Item>List</Breadcrumb.Item>
         </Breadcrumb>
         <div className="demo-toolbar-extra-content">
-          <Menu mode="horizontal">
-            <Menu.Item key="mail" icon={<MailOutlined />}>
-              Navigation One
-            </Menu.Item>
-            <Menu.Item key="app" icon={<AppstoreOutlined />}>
-              Navigation Two
-            </Menu.Item>
-            <Menu.Item key="setting" icon={<SettingOutlined />}>
-              Navigation Threeimport React from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { HomeOutlined, UserOutlined, LaptopOutlined, NotificationOutlined, MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
-
-            </Menu.Item>
-          </Menu>
+          <Menu mode="horizontal" items={[
+            {
+              key: "mail",
+              icon: <MailOutlined />,
+              label: "Navigation One"
+            },
+            {
+              key: "app",
+              icon: <AppstoreOutlined />,
+              label: "Navigation Two"
+            },
+            {
+              key: "setting",
+              icon: <SettingOutlined />,
+              label: "Navigation Three"
+            }
+          ]} />
         </div>
       </Header>
       <Content style={{ margin: '24px 16px 0' }}>
