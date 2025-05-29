@@ -35,9 +35,6 @@ jobs:
         with:
           static_site_generator: next
           
-      - name: Generate Prisma Client
-        run: npx prisma generate
-        
       - name: Copy CNAME file
         run: |
           mkdir -p out
@@ -51,6 +48,7 @@ jobs:
           echo "NODE_ENV=production" >> $GITHUB_ENV
         env:
           NEXT_PUBLIC_USE_STATIC_DATA: "true"
+          NEXT_PUBLIC_SKIP_PRISMA: "true"
           NODE_ENV: "production"
           
       - name: Upload artifact
