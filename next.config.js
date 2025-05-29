@@ -9,7 +9,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'Recoveredtreasurestx.shop',
+        hostname: 'recoveredtreasurestx.shop',
       },
       {
         protocol: 'https',
@@ -27,6 +27,8 @@ const nextConfig = {
   },
   env: {
     NEXT_PUBLIC_BASE_PATH: '',
+    NEXT_PUBLIC_USE_STATIC_DATA: 'true',
+    NEXT_PUBLIC_SKIP_PRISMA: 'true',
   },
 }
 

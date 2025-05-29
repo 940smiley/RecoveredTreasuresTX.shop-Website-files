@@ -21,6 +21,6 @@ export function withHydration<P extends object>(Component: React.ComponentType<P
       return null // or a loading skeleton
     }
     
-    return <Component {...props} />
+    return React.createElement(Component, props)
   }
 }
