@@ -1,9 +1,14 @@
-// Environment configuration for static deployment
-export const isDevelopment = process.env.NODE_ENV === 'development'
-export const isProduction = process.env.NODE_ENV === 'production'
+// This file is deprecated - use config.ts instead
+// Keeping for backward compatibility
+import { isDevelopment, isProduction, useStaticData } from './config';
 
-// For static deployment, use mock data instead of database
-export const useStaticData = process.env.NEXT_PUBLIC_USE_STATIC_DATA === 'true' || process.env.NODE_ENV === 'production'
+// Export for backward compatibility
+export { isDevelopment, isProduction, useStaticData };
 
 // Base path for assets
-export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+// Add deprecation warning in development
+if (process.env.NODE_ENV === 'development') {
+  console.warn('lib/env.ts is deprecated. Use lib/config.ts instead.');
+}

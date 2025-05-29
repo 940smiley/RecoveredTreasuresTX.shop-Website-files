@@ -3,11 +3,87 @@
 
 generator client {
   provider = "prisma-client-js"
+  // Enable prefixed indexes for better performance
+  previewFeatures = ["postgresqlExtensions", "fullTextSearch"]
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  // Useful for full-text search
+  extensions = [pgcrypto, pg_trgm]
+}
+
+// Enum definitions for better type safety
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  SOLD
+  ARCHIVED
+}
+
+enum ProductCondition {
+  NEW
+  LIKE_NEW
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+  UNKNOWN
+}
+
+enum UploadStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum ActivityAction {
+  CREATE
+  UPDATE
+  DELETE
+  VIEW
+  PROCESS
+  LOGIN
+  LOGOUT
+  UPLOAD
+  DOWNLOAD
+  GENERATE
+  AUTHENTICATE
+}
+
+// New model for activity tracking
+model ActivityLog {
+  id          String   @id @default(cuid())
+  action      String   // CREATE, UPDATE, DELETE, VIEW, PROCESS, LOGIN, etc.
+  entityType  String   // Product, Category, Batch, User, etc.
+  entityId    String?  // ID of the entity being acted upon
+  details     Json?    // Additional details about the activity
+  ipAddress   String?
+  userAgent   String?
+  
+  // Relations to specific entities (optional)
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id])
+  
+  batchId     String?
+  batch       UploadBatch? @relation(fields: [batchId], references: [id])
+  
+  // User info (even if we don't have a full User model yet)
+  userId      String?
+  userEmail   String?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Indexes for common queries
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@index([userId])
+  @@map("activity_logs")
 }
 
 model Category {
@@ -15,19 +91,33 @@ model Category {
   name        String    @unique
   slug        String    @unique
   description String?
+  imageUrl    String?
+  sortOrder   Int       @default(0)
+  isActive    Boolean   @default(true)
+  
+  // Hierarchy
   parentId    String?
   parent      Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
   children    Category[] @relation("CategoryHierarchy")
+  
+  // Relations
   products    Product[]
+  
+  // Timestamps and soft delete
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 
+  // Add indexes for performance
+  @@index([parentId])
+  @@index([isActive])
   @@map("categories")
 }
 
 model Product {
   id                String   @id @default(cuid())
   title             String
+  slug              String?  @unique
   description       String?
   aiGeneratedDesc   String?
   condition         String   @default("UNKNOWN")
@@ -39,19 +129,43 @@ model Product {
   edition           String?
   rarity            String?
   isAuthenticated   Boolean  @default(false)
+  authenticationNotes String?
   weight            Float?
   dimensions        String?
   sku               String?  @unique
   barcode           String?
-  tags              String   @default("")
+  stockQuantity     Int      @default(1)
+  
+  // Store tags as an array for better querying
+  tags              String[] @default([])
+  
+  // Relations
   categoryId        String
   category          Category @relation(fields: [categoryId], references: [id])
   images            ProductImage[]
-  status            String   @default("DRAFT")
+  activities        ActivityLog[]
+  
+  // Product status
+  status            String   @default("DRAFT") // DRAFT, PUBLISHED, SOLD, ARCHIVED
   featured          Boolean  @default(false)
+  
+  // Audit and timestamps
+  viewCount         Int      @default(0)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  deletedAt         DateTime?
+  
+  // Source tracking
+  uploadBatchItemId String?
+  batchItem         UploadBatchItem? @relation(fields: [uploadBatchItemId], references: [id])
 
+  // Indexes for common queries
+  @@index([categoryId])
+  @@index([status, featured])
+  @@index([manufacturer])
+  @@index([tags])
+  @@index([deletedAt])
+  @@fulltext([title, description]) // Full-text search for product search
   @@map("products")
 }
 
@@ -63,29 +177,56 @@ model ProductImage {
   size        Int?
   width       Int?
   height      Int?
+  mimeType    String?
   isPrimary   Boolean  @default(false)
   isProcessed Boolean  @default(false)
+  processingStatus String? // For tracking AI processing status
   altText     String?
+  
+  // Relations
   productId   String
   product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  // Timestamps
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
 
+  // Indexes for frequent queries
+  @@index([productId, isPrimary])
+  @@index([isProcessed])
   @@map("product_images")
 }
 
 model UploadBatch {
-  id        String      @id @default(cuid())
-  name      String?
-  status    String      @default("PROCESSING")
-  totalFiles Int        @default(0)
-  processedFiles Int    @default(0)
-  successFiles Int      @default(0)
-  failedFiles Int       @default(0)
-  items     UploadBatchItem[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id            String      @id @default(cuid())
+  name          String?
+  description   String?
+  status        String      @default("PROCESSING") // PROCESSING, COMPLETED, FAILED, CANCELLED
+  totalFiles    Int         @default(0)
+  processedFiles Int        @default(0)
+  successFiles  Int         @default(0)
+  failedFiles   Int         @default(0)
+  
+  // Optional user info
+  userId        String?
+  userEmail     String?
+  
+  // Relations
+  items         UploadBatchItem[]
+  activities    ActivityLog[]
+  
+  // Processing info
+  startedAt     DateTime?
+  completedAt   DateTime?
+  
+  // Timestamps
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
+  // Indexes
+  @@index([status])
+  @@index([createdAt])
   @@map("upload_batches")
 }
 
@@ -94,16 +235,32 @@ model UploadBatchItem {
   filename        String
   originalPath    String
   url             String?
-  status          String   @default("PENDING")
+  mimeType        String?
+  size            Int?
+  status          String   @default("PENDING") // PENDING, PROCESSING, SUCCESS, FAILED
   errorMessage    String?
+  
+  // AI processing data
   detectedCategory String?
-  detectedTags    String   @default("")
-  aiAnalysis      String?
-  productId       String?
+  detectedTags    String[] @default([])
+  aiAnalysis      Json?    // Store AI analysis as structured data
+  confidenceScore Float?   // AI confidence score
+  
+  // Relations
   batchId         String
   batch           UploadBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  product         Product?    // Relation to the product created from this upload
+  
+  // Processing info
+  processingStartedAt DateTime?
+  processingCompletedAt DateTime?
+  
+  // Timestamps
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
+  // Indexes
+  @@index([batchId, status])
+  @@index([detectedCategory])
   @@map("upload_batch_items")
 }

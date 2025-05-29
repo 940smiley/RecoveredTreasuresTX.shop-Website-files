@@ -71,7 +71,10 @@ const App: React.FC = () => (
               Navigation Two
             </Menu.Item>
             <Menu.Item key="setting" icon={<SettingOutlined />}>
-              Navigation Three
+              Navigation Threeimport React from 'react';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import { HomeOutlined, UserOutlined, LaptopOutlined, NotificationOutlined, MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+
             </Menu.Item>
           </Menu>
         </div>
