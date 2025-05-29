@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
   images: {
     unoptimized: true,
-    domains: ['localhost', 'res.cloudinary.com', '940smiley.github.io', 'github.com'],
+    domains: ['localhost', 'res.cloudinary.com', '940smiley.github.io', 'github.com', 'recoveredtreasurestx.shop'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -27,7 +26,7 @@ const nextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_BASE_PATH: '/RecoveredTreasuresTX',
+    NEXT_PUBLIC_BASE_PATH: '',
   },
 }
 

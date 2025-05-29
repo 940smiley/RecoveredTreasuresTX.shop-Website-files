@@ -1,29 +1,8 @@
-<<<<<<< HEAD
-name: Deploy to GitHub Pages
-=======
 name: Deploy Next.js to GitHub Pages
->>>>>>> 8ab69d73f406041d90372c1e656e6566329717b6
 
 on:
   push:
     branches: [ main ]
-<<<<<<< HEAD
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: npm install
-      - run: npm run build
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
-=======
   workflow_dispatch:
 
 permissions:
@@ -59,6 +38,11 @@ jobs:
       - name: Generate Prisma Client
         run: npx prisma generate
         
+      - name: Copy CNAME file
+        run: |
+          mkdir -p out
+          cp CNAME out/
+
       - name: Build with Next.js
         run: |
           npm run build
@@ -66,7 +50,6 @@ jobs:
           echo "NEXT_PUBLIC_USE_STATIC_DATA=true" >> $GITHUB_ENV
           echo "NODE_ENV=production" >> $GITHUB_ENV
         env:
-          NEXT_PUBLIC_BASE_PATH: /RecollectedTreasuresTX
           NEXT_PUBLIC_USE_STATIC_DATA: "true"
           NODE_ENV: "production"
           
@@ -85,4 +68,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
->>>>>>> 8ab69d73f406041d90372c1e656e6566329717b6
