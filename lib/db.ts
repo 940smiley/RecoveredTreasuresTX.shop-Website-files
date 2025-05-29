@@ -1,17 +1,30 @@
 import { PrismaClient } from '@prisma/client'
-import { useStaticData } from './env'
+import { useStaticData } from './config'
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
+// For TypeScript we need to handle the case where prisma might be null
+declare global {
+  // eslint-disable-next-line no-var
+  var prisma: PrismaClient | undefined
 }
 
 // For static deployment, we'll use mock data instead of actual database
+// We initialize to null and then set it conditionally below
 let prisma: PrismaClient | null = null
 
+// Only create Prisma client on server-side (not client) and when not using static data
 if (!useStaticData && typeof window === 'undefined') {
-  // Only create Prisma client on server-side in development
-  prisma = globalForPrisma.prisma ?? new PrismaClient()
-  if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+  // In development, we want to reuse the client across hot reloads
+  // In production, a new instance will be created for each function execution
+  prisma = globalThis.prisma ?? new PrismaClient({
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  })
+
+  // Save for reuse in development
+  if (process.env.NODE_ENV !== 'production') {
+    globalThis.prisma = prisma
+  }
 }
 
+// We export the prisma client, but it might be null in static mode
+// Consumers need to check if it's null before using
 export { prisma }
