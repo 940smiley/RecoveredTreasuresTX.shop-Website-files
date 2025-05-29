@@ -1,4 +1,4 @@
-# Recollected Treasures TX - AI-Powered Collectibles Store
+# Recovered Treasures TX - AI-Powered Collectibles Store
 
 A modern, AI-enhanced e-commerce platform specifically designed for collectibles, featuring automatic categorization, photo enhancement, and intelligent product descriptions.
 
@@ -45,8 +45,8 @@ A modern, AI-enhanced e-commerce platform specifically designed for collectibles
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/940smiley/RecollectedTreasuresTX.git
-   cd RecollectedTreasuresTX
+   git clone https://github.com/940smiley/RecoveredTreasuresTX.git
+   cd RecoveredTreasuresTX
    ```
 
 2. **Install dependencies**
@@ -61,7 +61,7 @@ A modern, AI-enhanced e-commerce platform specifically designed for collectibles
    
    Edit `.env.local` with your configuration:
    ```env
-   DATABASE_URL="postgresql://username:password@localhost:5432/recollected_treasures?schema=public"
+   DATABASE_URL="postgresql://username:password@localhost:5432/Recovered_treasures?schema=public"
    OPENAI_API_KEY="your_openai_api_key_here"
    GOOGLE_VISION_API_KEY="your_google_vision_api_key_here"
    CLOUDINARY_CLOUD_NAME="your_cloudinary_cloud_name"
