@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { verify } from 'jsonwebtoken';
 import { env } from '@/lib/config';
 import { createRateLimiter } from '@/lib/rate-limit';
@@ -21,7 +20,7 @@ export async function GET(request: NextRequest) {
     }
     
     // Get the token from cookies
-    const token = cookies().get('auth_token')?.value;
+    const token = request.cookies.get('auth_token')?.value;
     
     if (!token) {
       return NextResponse.json(
@@ -70,4 +69,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

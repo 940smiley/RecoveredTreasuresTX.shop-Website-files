@@ -31,7 +31,7 @@ export function createRateLimiter(config: RateLimitConfig) {
     // Generate a key for the rate limit (default to IP)
     const key = keyGenerator 
       ? keyGenerator(req) 
-      : req.ip || 'unknown-ip';
+      : (req.headers.get('x-forwarded-for') || 'unknown-ip').split(',')[0].trim();
     
     // Get current timestamp
     const now = Date.now();
@@ -81,4 +81,3 @@ export function createRateLimiter(config: RateLimitConfig) {
     return headers;
   };
 }
-
