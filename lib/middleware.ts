@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { verify } from 'jsonwebtoken';
 import { env } from './config';
 
@@ -9,7 +8,7 @@ import { env } from './config';
 export async function isAuthenticated(request: NextRequest) {
   try {
     // Get the token from cookies
-    const token = cookies().get('auth_token')?.value;
+    const token = request.cookies.get('auth_token')?.value;
     
     if (!token) {
       return false;
@@ -40,4 +39,3 @@ export async function authMiddleware(request: NextRequest) {
   
   return null; // Continue to route handler if authenticated
 }
-

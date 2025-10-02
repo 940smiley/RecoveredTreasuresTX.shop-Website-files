@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { sign } from 'jsonwebtoken';
 import { env } from '@/lib/config';
 import { createRateLimiter } from '@/lib/rate-limit';
@@ -45,8 +44,12 @@ export async function POST(request: NextRequest) {
       { expiresIn: '4h' } // Token expires in 4 hours
     );
     
-    // Set HttpOnly cookie
-    cookies().set({
+    const response = NextResponse.json(
+      { success: true },
+      { headers: rateLimit }
+    );
+
+    response.cookies.set({
       name: 'auth_token',
       value: token,
       httpOnly: true,
@@ -56,10 +59,7 @@ export async function POST(request: NextRequest) {
       path: '/',
     });
     
-    return NextResponse.json(
-      { success: true },
-      { headers: rateLimit }
-    );
+    return response;
   } catch (error) {
     console.error('Admin login error:', error);
     return NextResponse.json(
@@ -68,4 +68,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

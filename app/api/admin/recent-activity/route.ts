@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import { authMiddleware } from '@/lib/middleware';
 import { useStaticData } from '@/lib/config';
 
+export const dynamic = 'force-static';
+
 // Define types based on Prisma schema
 interface UploadBatch {
   id: string;
@@ -168,4 +170,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-
