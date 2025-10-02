@@ -3,6 +3,8 @@ import { verify } from 'jsonwebtoken';
 import { env } from '@/lib/config';
 import { createRateLimiter } from '@/lib/rate-limit';
 
+export const dynamic = 'force-static';
+
 // Create a rate limiter: 20 attempts per minute
 const rateLimiter = createRateLimiter({
   limit: 20,
