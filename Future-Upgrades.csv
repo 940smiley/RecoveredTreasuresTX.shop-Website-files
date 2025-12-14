@@ -1,0 +1,7 @@
+Component/Dependency,Possible Upgrade Versions,Compatibility Notes,Estimated Complexity,Mitigation Strategies,Codex Commentary + Risk Flag
+Next.js,16.x (once stable),Expect updated app-router APIs and potential config changes for static export,Medium,Use canary in a branch and validate `next export` with `NEXT_PUBLIC_USE_STATIC_DATA=true`,[Medium] Aligns with LTS but watch for route handling changes
+React,19.x,Concurrent features may shift typing and Suspense defaults,Medium,Enable Strict Mode locally and run lint + type checks, [Medium] Gains future-proofing for streaming UIs
+Prisma,5.9+ or 6.x,Breakers possible in client generation and migrations,High,Pin minor version, run `prisma migrate dev` on staging, [High] Schema validation changes could impact CI
+Tailwind CSS,3.4 -> 4.0,Config and plugin API shifts likely,Medium,Track beta, regenerate CSS with `next lint` and design QA, [Medium] Keep custom animations reviewed
+OpenAI SDK,4.42+ (latest),Response shapes and beta flags change frequently,Low,Wrap calls behind adapters and snapshot tests, [Low] Faster models but watch for quota configs
+Node.js runtime,20.x LTS,Aligns with Actions defaults and Vercel runtime,Low,Use `.nvmrc` and update CI matrix, [Low] Better perf + security patches

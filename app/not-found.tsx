@@ -13,7 +13,7 @@ export default function NotFound() {
           </div>
           <CardTitle className="text-2xl">Page Not Found</CardTitle>
           <CardDescription>
-            Sorry, we couldn't find the collectible you're looking for.
+            Sorry, we couldn&apos;t find the collectible you&apos;re looking for.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

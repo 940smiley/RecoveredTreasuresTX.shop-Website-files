@@ -28,7 +28,7 @@ export default function BatchUploadPage() {
             AI Processing Pipeline
           </CardTitle>
           <CardDescription>
-            Here's what happens to each photo during batch processing
+            Here&apos;s what happens to each photo during batch processing
           </CardDescription>
         </CardHeader>
         <CardContent>
