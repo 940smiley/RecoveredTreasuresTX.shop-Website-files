@@ -5,7 +5,7 @@ Guidance for connecting Recovered Treasures TX to Google Cloud Vertex AI and emb
 ## Vertex AI (Generative & Vision)
 - **Use cases:** description generation, quality scoring, visual similarity, and OCR for provenance.
 - **Environment variables:**
-  - `GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json`
+  - `GOOGLE_APPLICATION_CREDENTIALS_JSON` (base64 encoded service account JSON content)
   - `PROJECT_ID`, `LOCATION` (e.g., `us-central1`)
 - **Client setup (TypeScript example):**
   ```ts
