@@ -63,7 +63,7 @@ An AI-powered collectibles management platform designed to streamline the organi
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14, React 18
+- **Framework**: Next.js 15, React 18
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS, shadcn/ui
 - **Database**: Prisma with SQLite/PostgreSQL
