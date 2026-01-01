@@ -30,7 +30,22 @@ Use this guide to publish a static export of Recovered Treasures TX to Firebase 
      "hosting": {
        "public": "out",
        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-       "rewrites": [{ "source": "**", "destination": "/index.html" }]
+       "rewrites": [{ "source": "**", "destination": "/index.html" }],
+       "headers": [
+         {
+           "source": "**",
+           "headers": [
+             {
+               "key": "X-Frame-Options",
+               "value": "DENY"
+             },
+             {
+               "key": "Content-Security-Policy",
+               "value": "default-src 'self'; style-src 'unsafe-inline'; font-src 'self'  img-src 'self' data: https:;"
+             }
+           ]
+         }
+       ]
      }
    }
    ```
