@@ -1,0 +1,6 @@
+Feature Name,Feasibility Score,Estimated Dev Time,Expected Impact,Priority Rating,Recommended Branch Name
+AI-powered grading rubric (condition + rarity),0.78,1.5 weeks,Improves appraisal quality and seller trust,High,codex/ai-grading-rubric
+Public browse microsite with static CDN cache,0.86,4 days,Better SEO + zero-backend demos for shows,Medium,codex/static-browse-microsite
+Firebase Hosting CI preview,0.82,2 days,Fast staging links for merch partners,Medium,codex/firebase-hosting-preview
+Vertex AI description fallback,0.74,1 week,Reduces OpenAI dependency and adds redundancy,Medium,codex/vertex-fallback
+Google Sites embed template,0.9,1 day,Smooth onboarding for non-technical curators,Low,codex/google-sites-embed
