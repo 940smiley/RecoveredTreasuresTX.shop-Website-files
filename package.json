@@ -16,7 +16,7 @@
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
     "@prisma/client": "^5.7.1",
-    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-progress": "^1.0.3",
