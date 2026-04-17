@@ -28,7 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "antd": "^5.25.3",
+    "antd": "^6.3.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
